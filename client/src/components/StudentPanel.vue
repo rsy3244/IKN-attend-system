@@ -35,6 +35,13 @@ export default class StudentPanel extends Vue {
 
   private attend(): void {
     this.state = 1;
+    this.getName();
+  }
+  private getName(): void {
+    const url = '/test';
+    fetch(url).then((str) => {
+      this.name = str;
+    });
   }
 }
 </script>
