@@ -1,17 +1,26 @@
-use actix_web::{web, get, App, HttpResponse, HttpServer, Responder, Result};
-use actix_files as fs;
+use actix_web::{web, HttpResponse, Result};
+use serde::{Deserialize, Serialize};
 use listenfd::ListenFd;
 
-async fn index() -> Result<String> {
-    Ok(String::from("Hello, world!"))
+#[derive(Serialize, Deserialize)]
+struct MyObj {
+    name: String,
+}
+
+async fn index() -> Result<HttpResponse> {
+    Ok(HttpResponse::Ok().json(MyObj {
+        name: String::from("monkukui"),
+    }))
 }
 
 #[actix_rt::main]
 async fn main() -> std::io::Result<()> {
+    use actix_web::{App, HttpServer};
+
     let mut listenfd = ListenFd::from_env();
     let mut server =  HttpServer::new(|| {
         App::new()
-            .route("/test", web::to(index))
+            .route("/api/test", web::to(index))
     });
 
     server = if let Some(l) = listenfd.take_tcp_listener(0).unwrap() {
