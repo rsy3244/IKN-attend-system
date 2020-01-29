@@ -4,8 +4,6 @@
       max-width="500"
       class="mx-auto"
     >
-      <v-btn icon>
-      </v-btn>
       {{grade}}
       {{name}}
       <span v-if="state === 1">
