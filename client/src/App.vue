@@ -6,7 +6,7 @@
       color="blue-grey darken-3"
     >
     <v-toolbar-title>
-      Application
+      IKN-attend-system
     </v-toolbar-title>
 
       <v-spacer></v-spacer>
