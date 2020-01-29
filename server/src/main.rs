@@ -3,7 +3,7 @@ use listenfd::ListenFd;
 
 #[get("/index")]
 async fn index() -> impl Responder {
-    HttpResponse::Ok().body(include_str!("client/dst/index.html"))
+    HttpResponse::Ok().body(include_str!("../../client/dst/index.html"))
 }
 
 async fn index2() -> impl Responder {
@@ -20,8 +20,7 @@ async fn main() -> std::io::Result<()> {
     let mut listenfd = ListenFd::from_env();
     let mut server =  HttpServer::new(|| {
         App::new()
-            .service(index3)
-            .route("/", web::get().to(index))
+            .service(index)
             .route("/again", web::get().to(index2))
     });
 
