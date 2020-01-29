@@ -15,3 +15,11 @@ curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 ```bash
 source $HOME/.cargo/env
 ```
+
+###動作確認
+
+- ビルドして実行（serverディレクトリで行う）
+
+```bash
+cargo run
+```
