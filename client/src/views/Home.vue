@@ -1,13 +1,15 @@
 <template>
   <div class="home">
+    <center>
     <v-row align="center">
-      <v-col cols="12" sm="6">
+      <v-col cols="12" sm="3">
         <AttendList />
       </v-col>
-      <v-col cols="12" sm="6">
+      <v-col cols="12" sm="3">
         <AttendList />
       </v-col>
     </v-row>
+    </center>
   </div>
 </template>
 
