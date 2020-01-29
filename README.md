@@ -16,6 +16,14 @@ curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 source $HOME/.cargo/env
 ```
 
+### 必要なバイナリーファイルをインストール
+
+- これをserverディレクトリ上で実行
+
+```bash
+cargo install systemfd cargo-watch
+```
+
 ### 動作確認
 
 - ビルドして実行（serverディレクトリで行う）
