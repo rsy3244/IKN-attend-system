@@ -1,16 +1,18 @@
 <template>
   <div class="attend-list">
     <v-card
-    max-width="500"
-    class="mx-auto"
+      max-width="500"
+      class="mx-auto"
     >
       <v-toolbar
-        color="indigo"
+        color="indigo lighten-1"
         dark
       >
         <v-app-bar-nav-icon></v-app-bar-nav-icon>
 
-        <v-toolbar-title>Inbox</v-toolbar-title>
+        <v-toolbar-title>
+          {{ room }}部屋
+        </v-toolbar-title>
 
         <v-spacer></v-spacer>
 
@@ -24,25 +26,29 @@
       </v-toolbar>
       <v-list>
         <v-list-item
-          v-for="item in items"
-          :key="item.title"
-          @click=""
+          v-for="(item, index) in items"
+          :key="index"
+          @click="switchAtendance(index)"
         >
-          <v-list-item-icon>
-            <v-icon v-if="item.icon" color="pink">mdi-star</v-icon>
-          </v-list-item-icon>
-
+        <v-list-item-icon>
+          <v-icon v-if="item.state === 1" color="pink">mdi-account-circle</v-icon>
+        </v-list-item-icon>
           <v-list-item-content>
-            <v-list-item-title v-text="item.title"></v-list-item-title>
+            <v-list-item v-text="item.grade"></v-list-item>
           </v-list-item-content>
 
-          <v-list-item-avatar>
-            <v-img :src="item.avatar"></v-img>
-          </v-list-item-avatar>
+          <v-list-item-content>
+            <v-list-item-title v-text="item.name"></v-list-item-title>
+          </v-list-item-content>
+
+          <v-list-item-content>
+            <v-list-item v-if="item.state === 1">在室</v-list-item>
+            <v-list-item v-if="item.state === 0">不在</v-list-item>
+          </v-list-item-content>
+
         </v-list-item>
       </v-list>
     </v-card>
-    <StudentPanel/>
   </div>
 </template>
 
@@ -56,15 +62,29 @@ import StudentPanel from '@/components/StudentPanel.vue';
     StudentPanel,
   },
 })
+
 export default class AttendList extends Vue {
+  
   @Prop()
   private room!: string;
+  
+  private switchAtendance(id: number): void {
+    if(this.items[id].state === 1) this.leave(id);
+    else this.attend(id);
+  }
+
+  private leave(id: number): void {
+    this.items[id].state = 0;
+  }
+
+  private attend(id: number): void {
+    this.items[id].state = 1;
+  }
 
   private items: any = [
-    { icon: true, title: 'Jason Oner', avatar: 'https://cdn.vuetifyjs.com/images/lists/1.jpg' },
-    { title: 'Travis Howard', avatar: 'https://cdn.vuetifyjs.com/images/lists/2.jpg' },
-    { title: 'Ali Connors', avatar: 'https://cdn.vuetifyjs.com/images/lists/3.jpg' },
-    { title: 'Cindy Baker', avatar: 'https://cdn.vuetifyjs.com/images/lists/4.jpg' },
+    { id: 1, name: '大泉翼', grade: 'B4', state: 1},
+    { id: 2, name: '光代健太', grade: 'B4', state: 0},
+    { id: 3, name: '小畑教寛', grade: 'B4', state: 1},
   ];
 }
 </script>

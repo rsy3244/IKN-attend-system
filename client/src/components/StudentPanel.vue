@@ -38,7 +38,6 @@ export default class StudentPanel extends Vue {
   }
   private getName(): void {
     const url = '/api/test';
-    console.log(url);
     fetch(url).then((response) => {
       if (response.ok) {
         return response.json();
