@@ -35,4 +35,3 @@ cargo run
 - [ブラウザで確認](http://localhost:8088)
  - [/again](http://localhost:8088/again)
  - [/hello](http://localhost:8088/hello)
-
