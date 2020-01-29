@@ -1,6 +1,7 @@
 <template>
   <div class="attend-list">
     <center>
+      {{ room }} 部屋
       <StudentPanel />
       <StudentPanel />
       <StudentPanel />
@@ -22,6 +23,8 @@ import StudentPanel from '@/components/StudentPanel.vue';
   },
 })
 export default class AttendList extends Vue {
+  @Prop()
+  private room!: string;
 }
 </script>
 
