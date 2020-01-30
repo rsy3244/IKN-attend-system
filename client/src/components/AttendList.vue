@@ -38,7 +38,7 @@
           </v-list-item-content>
 
           <v-list-item-content>
-            <v-list-item-title v-text="student.name"></v-list-item-title>
+            <v-list-item-title v-text="student.username"></v-list-item-title>
           </v-list-item-content>
 
           <v-list-item-content>
@@ -66,6 +66,7 @@ import StudentPanel from '@/components/StudentPanel.vue';
 export default class AttendList extends Vue {
 
   private topColor: string = 'deep-purple lighten-1';
+  private students: any = [];
   @Prop()
   private room!: string;
   private switchAtendance(id: number): void {
@@ -82,7 +83,7 @@ export default class AttendList extends Vue {
         // TODO ここは，getStudent を呼び直す仕様にする
         this.students[id].state = 0;
       } else {
-        // alert("internal server error");
+        // alert('internal server error');
         this.students[id].state = 0;
       }
     });
@@ -94,12 +95,11 @@ export default class AttendList extends Vue {
         // TODO ここは，getStudent を呼び直す仕様にする
         this.students[id].state = 1;
       } else {
-        // alert("internal server error");
+        // alert('internal server error');
         this.students[id].state = 1;
       }
     });
   }
-  private students: any = [];
   private getStudents(): void {
     const url = 'api/students';
     fetch(url).then((response) => {
