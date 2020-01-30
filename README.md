@@ -32,6 +32,13 @@ cargo install systemfd cargo-watch
 cargo run
 ```
 
-- [ブラウザで確認](http://localhost:8088)
- - [/again](http://localhost:8088/again)
- - [/hello](http://localhost:8088/hello)
+- api確認
+ - attend
+ ```bash
+ curl -X PUT http://localhost:8080/api/attend/{id}
+ ```
+
+ - leave
+ ```bash
+ curl -X PUT http://localhost:8080/api/leave/{id}
+ ```
