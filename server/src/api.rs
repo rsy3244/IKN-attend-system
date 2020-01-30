@@ -1,18 +1,18 @@
 use actix_web::{web, HttpResponse, Result};
 use serde::{Deserialize, Serialize};
 
-#[derive(Deserialize, Serialize)]
+#[derive(Clone, Deserialize, Serialize)]
 struct ColumnRaw {
     id : usize,
     username : String,
-    grade : String,
+    role : String,
     state : String,
 }
 
 struct Column {
     id : usize,
     username : String,
-    grade : String,
+    role : String,
     state : State,
 }
 
@@ -21,7 +21,7 @@ impl Column {
         ColumnRaw {
             id: self.id,
             username: self.username.clone(),
-            grade: self.grade.clone(),
+            role: self.role.clone(),
             state: match self.state {
                 State::Attend => String::from("1"),
                 State::Leave => String::from("0"),
@@ -38,27 +38,41 @@ enum State {
 }
 
 pub async fn attend(info: web::Path<(usize,)>) -> Result<HttpResponse> {
-    println!("query attend");
     Ok(HttpResponse::Ok().json(
             Column {
                 id: info.0,
                 username: "サザエさん".to_string(),
-                grade: "B4".to_string(),
+                role: "B4".to_string(),
                 state: State::Attend,
             }.into_raw()
     ))
 }
 
 pub async fn leave(info: web::Path<(usize,)>) -> Result<HttpResponse> {
-    println!("query leave");
     Ok(HttpResponse::Ok().json(
             Column {
                 id: info.0,
                 username:  "サザエさん".to_string(),
-                grade: "B4".to_string(),
+                role: "B4".to_string(),
                 state: State::Leave,
             }.into_raw()
     ))
 }
+
+pub async fn get_all() -> Result<HttpResponse> {
+    Ok(HttpResponse::Ok().json(
+            vec![
+                Column {
+                    id: 1,
+                    username: "カツオ".to_string(),
+                    role: "Professor".to_string(),
+                    state: State::Leave,
+                }.into_raw()
+                ; 3
+            ]
+    ))
+}
+
+
 
 //async fn index(info: web::Json<Column>) -> Result<String> {
