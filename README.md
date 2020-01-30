@@ -42,3 +42,39 @@ cargo run
  ```bash
  curl -X PUT http://localhost:8080/api/leave/{id}
  ```
+ 
+ ### API
+ 最低限これだけあればよし
+ #### PUT
+ - `api/attend/<id>`
+ - `api/leave/<id>`
+ 
+ #### GET
+ - `api/students/`
+ json
+ ```
+ [
+  {
+   "id": 1,
+   "name": "monkukui",
+   "grade": "B4",
+   "state": 0,
+  },
+  {
+   "id": 2,
+   "name": "rossy",
+   "grade": "B4",
+   "state": 1,
+  },
+ ]
+ ```
+ - `api/student/<id>`
+ json
+ ```
+ {
+  "id": 2,
+  "name": rossy,
+  "grade": "B4",
+  "state": 1,
+ }
+ ```
