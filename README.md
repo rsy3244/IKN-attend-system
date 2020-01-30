@@ -90,3 +90,31 @@ cargo run
   
   0. Leave
   0. Attend
+
+## misc
+
+### masterブランチでのcommitを禁止する
+
+ - .git/hooks/pre-commit に以下を記述
+
+ ```:pre-commit
+
+  #!/bin/sh
+
+  # if the branch is master, then fail.
+
+  branch="$(git symbolic-ref HEAD 2>/dev/null)" || \
+    "$(git describe --contains --all HEAD)"
+
+  if [ "${branch##refs/heads/}" = "master" ]; then
+    printf "\e[31m%s\n\e[m" "[Error]"
+    echo "can't commit on master branch."
+    echo "please commit on topic branch."
+    exit 1
+  fi
+  ```
+
+ - 実行権限を与えておく（ターミナルで入力）
+ ```bash
+ chmod a+x .git/hoooks/pre-commit
+ ```
