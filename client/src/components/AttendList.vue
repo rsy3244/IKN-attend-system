@@ -78,7 +78,7 @@ export default class AttendList extends Vue {
   }
   private leave(id: number): void {
     const url = 'api/leave/' + `${id}`;
-    fetch(url).then((response) => {
+    fetch(url, {method: 'PUT'}).then((response) => {
       if (response.ok) {
         // TODO ここは，getStudent を呼び直す仕様にする
         this.students[id].state = 0;
@@ -89,8 +89,8 @@ export default class AttendList extends Vue {
     });
   }
   private attend(id: number): void {
-    const url = 'api/leave/' + `${id}`;
-    fetch(url).then((response) => {
+    const url = 'api/attend/' + `${id}`;
+    fetch(url, {method: 'PUT'}).then((response) => {
       if (response.ok) {
         // TODO ここは，getStudent を呼び直す仕様にする
         this.students[id].state = 1;
