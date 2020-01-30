@@ -30,13 +30,14 @@ impl Person {
     }
 }
 
-#[non_exhaustive]
 #[allow(dead_code)]
+#[non_exhaustive]
 pub enum State {
     Attend,
     Leave,
 }
 
+#[allow(unreachable_patterns)]
 impl State {
     pub fn to_usize(&self) -> usize {
         use State::*;
@@ -66,6 +67,7 @@ pub enum Role {
     ResearchAssociate,
 }
 
+#[allow(unreachable_patterns)]
 impl ToString for Role {
     fn to_string(&self) -> String {
         match self {
