@@ -50,13 +50,13 @@ cargo run
  [
   {
    "id": 1,
-   "name": monkukui,
+   "name": "monkukui",
    "grade": "B4",
    "state": 0,
   },
   {
    "id": 2,
-   "name": rossy,
+   "name": "rossy",
    "grade": "B4",
    "state": 1,
   },
