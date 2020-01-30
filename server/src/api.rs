@@ -73,6 +73,13 @@ pub async fn get_all() -> Result<HttpResponse> {
     ))
 }
 
-
-
-//async fn index(info: web::Json<Column>) -> Result<String> {
+pub async fn get_student(info: web::Path<(usize,)>) -> Result<HttpResponse> {
+    Ok(HttpResponse::Ok().json(
+            Column {
+                id: info.0,
+                username: "波平".to_string(),
+                role: "M1".to_string(),
+                state: State::Attend,
+            }.into_raw()
+    ))
+}
