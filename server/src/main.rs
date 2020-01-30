@@ -22,6 +22,7 @@ async fn main() -> std::io::Result<()> {
         App::new()
             .route("/api/attend/{id}", web::put().to(api::attend))
             .route("/api/leave/{id}", web::put().to(api::leave))
+            .route("/api/students", web::get().to(api::get_all))
     });
 
     server = if let Some(l) = listenfd.take_tcp_listener(0).unwrap() {
