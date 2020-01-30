@@ -33,14 +33,8 @@ cargo run
 ```
 
 - api確認
- - attend
  ```bash
- curl -X PUT http://localhost:8080/api/attend/{id}
- ```
-
- - leave
- ```bash
- curl -X PUT http://localhost:8080/api/leave/{id}
+ curl -X {Request} http://localhost:8080/api/{query}/{arg}
  ```
  
  ### API
