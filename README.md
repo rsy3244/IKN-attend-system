@@ -38,10 +38,23 @@ cargo run
  ```
  
  ### API
+
  最低限これだけあればよし
  #### PUT
  - `api/attend/<id>`
+ json {
+   "id": 3,
+   "name": "obata",
+   "role": "B4",
+   "state": 1,
+ }
  - `api/leave/<id>`
+ json {
+   "id": 4,
+   "name": "mata",
+   "role": "B4",
+   "state": 0,
+ }
  
  #### GET
  - `api/students/`
@@ -51,13 +64,13 @@ cargo run
   {
    "id": 1,
    "name": "monkukui",
-   "grade": "B4",
+   "role": "B4",
    "state": 0,
   },
   {
    "id": 2,
    "name": "rossy",
-   "grade": "B4",
+   "role": "B4",
    "state": 1,
   },
  ]
@@ -68,7 +81,12 @@ cargo run
  {
   "id": 2,
   "name": rossy,
-  "grade": "B4",
+  "role": "B4",
   "state": 1,
  }
  ```
+
+#### state対応表
+  
+  0. Leave
+  0. Attend
