@@ -3,6 +3,7 @@ use serde::{Deserialize, Serialize};
 use listenfd::ListenFd;
 
 mod api;
+mod person;
 
 #[derive(Serialize, Deserialize)]
 struct MyObj {
