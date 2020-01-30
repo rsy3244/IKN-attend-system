@@ -44,14 +44,14 @@ cargo run
  - `api/attend/<id>`
  json {
    "id": 3,
-   "name": "obata",
+   "username": "obata",
    "role": "B4",
    "state": 1,
  }
  - `api/leave/<id>`
  json {
    "id": 4,
-   "name": "mata",
+   "username": "mata",
    "role": "B4",
    "state": 0,
  }
@@ -63,13 +63,13 @@ cargo run
  [
   {
    "id": 1,
-   "name": "monkukui",
+   "username": "monkukui",
    "role": "B4",
    "state": 0,
   },
   {
    "id": 2,
-   "name": "rossy",
+   "username": "rossy",
    "role": "B4",
    "state": 1,
   },
@@ -80,7 +80,7 @@ cargo run
  ```
  {
   "id": 2,
-  "name": rossy,
+  "username": rossy,
   "role": "B4",
   "state": 1,
  }
