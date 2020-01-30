@@ -3,10 +3,11 @@
     <v-app-bar
       app
       dark
+      color="blue-grey darken-3"
     >
-      <div class="d-flex align-center">
-        <span class="mr-6">ikn-attend-system</span>
-      </div>
+    <v-toolbar-title>
+      IKN-attend-system
+    </v-toolbar-title>
 
       <v-spacer></v-spacer>
     </v-app-bar>
