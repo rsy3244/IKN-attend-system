@@ -104,8 +104,8 @@ export default class AttendList extends Vue {
       }
       return [ // 404 の時にこれを返す TODO 後で reutrn [] にする．
         { id: 1, name: '大泉翼', grade: 'B4', state: 1},
-        { id: 2, name: '光代健太', grade: 'B4', state: 0},
-        { id: 3, name: '小畑教寛', grade: 'B4', state: 1},
+        { id: 2, name: '光吉健汰', grade: 'B4', state: 0},
+        { id: 3, name: '小畠教寛', grade: 'B4', state: 1},
       ];
     }).then((json) => {
       this.students = json;
