@@ -1,18 +1,8 @@
-use actix_web::{web, HttpResponse, Result, Responder};
-use serde::{Deserialize, Serialize};
+use actix_web::web;
 use listenfd::ListenFd;
 
 mod api;
 mod person;
-
-#[derive(Serialize, Deserialize)]
-struct MyObj {
-    name: String,
-}
-
-async fn index() -> impl Responder {
-    HttpResponse::Ok().body("hello")
-}
 
 #[actix_rt::main]
 async fn main() -> std::io::Result<()> {

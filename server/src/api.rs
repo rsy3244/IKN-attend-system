@@ -1,5 +1,4 @@
 use actix_web::{web, HttpResponse, Result};
-use serde::{Deserialize, Serialize};
 
 use super::person::*;
 
