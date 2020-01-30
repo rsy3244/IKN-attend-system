@@ -33,21 +33,28 @@ cargo run
 ```
 
 - api確認
- - attend
  ```bash
- curl -X PUT http://localhost:8080/api/attend/{id}
- ```
-
- - leave
- ```bash
- curl -X PUT http://localhost:8080/api/leave/{id}
+ curl -X {Request} http://localhost:8080/api/{query}/{arg}
  ```
  
  ### API
+
  最低限これだけあればよし
  #### PUT
  - `api/attend/<id>`
+ json {
+   "id": 3,
+   "username": "obata",
+   "role": "B4",
+   "state": 1,
+ }
  - `api/leave/<id>`
+ json {
+   "id": 4,
+   "username": "mata",
+   "role": "B4",
+   "state": 0,
+ }
  
  #### GET
  - `api/students/`
@@ -56,14 +63,14 @@ cargo run
  [
   {
    "id": 1,
-   "name": "monkukui",
-   "grade": "B4",
+   "username": "monkukui",
+   "role": "B4",
    "state": 0,
   },
   {
    "id": 2,
-   "name": "rossy",
-   "grade": "B4",
+   "username": "rossy",
+   "role": "B4",
    "state": 1,
   },
  ]
@@ -73,8 +80,13 @@ cargo run
  ```
  {
   "id": 2,
-  "name": rossy,
-  "grade": "B4",
+  "username": rossy,
+  "role": "B4",
   "state": 1,
  }
  ```
+
+#### state対応表
+  
+  0. Leave
+  0. Attend

@@ -1,78 +1,36 @@
 use actix_web::{web, HttpResponse, Result};
 use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Deserialize, Serialize)]
-struct ColumnRaw {
-    id : usize,
-    username : String,
-    role : String,
-    state : String,
-}
+use super::person::*;
 
-struct Column {
-    id : usize,
-    username : String,
-    role : String,
-    state : State,
-}
-
-impl Column {
-    fn into_raw(&self) -> ColumnRaw {
-        ColumnRaw {
-            id: self.id,
-            username: self.username.clone(),
-            role: self.role.clone(),
-            state: match self.state {
-                State::Attend => String::from("1"),
-                State::Leave => String::from("0"),
-                _ => panic!("not implemented!"),
-            }
-        }
-    }
-}
-
-#[non_exhaustive]
-enum State {
-    Attend,
-    Leave,
-}
 
 pub async fn attend(info: web::Path<(usize,)>) -> Result<HttpResponse> {
     Ok(HttpResponse::Ok().json(
-            Column {
-                id: info.0,
-                username: "サザエさん".to_string(),
-                role: "B4".to_string(),
-                state: State::Attend,
-            }.into_raw()
+            Person::new(info.0, "サザエさん".to_string(), Role::B4, State::Leave)
+            .to_raw()
     ))
 }
 
 pub async fn leave(info: web::Path<(usize,)>) -> Result<HttpResponse> {
     Ok(HttpResponse::Ok().json(
-            Column {
-                id: info.0,
-                username:  "サザエさん".to_string(),
-                role: "B4".to_string(),
-                state: State::Leave,
-            }.into_raw()
+            Person::new(info.0, "サザエさん".to_string(), Role::B4, State::Leave)
+            .to_raw()
     ))
 }
 
 pub async fn get_all() -> Result<HttpResponse> {
     Ok(HttpResponse::Ok().json(
             vec![
-                Column {
-                    id: 1,
-                    username: "カツオ".to_string(),
-                    role: "Professor".to_string(),
-                    state: State::Leave,
-                }.into_raw()
+                Person::new(1, "カツオ".to_string(), Role::Professor, State::Leave)
+                .to_raw()
                 ; 3
             ]
     ))
 }
 
-
-
-//async fn index(info: web::Json<Column>) -> Result<String> {
+pub async fn get_student(info: web::Path<(usize,)>) -> Result<HttpResponse> {
+    Ok(HttpResponse::Ok().json(
+            Person::new(info.0, "波平".to_string(), Role::M1, State::Attend)
+            .to_raw()
+    ))
+}
