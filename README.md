@@ -37,10 +37,43 @@ cargo run
  curl -X {Request} http://localhost:8080/api/{query}/{arg}
  ```
  
- ### API
+## client
+
+### 導入
+- npm をインストールする．
+- node_modules をインストール
+```
+rm -rf node_modules
+npm install -g npm@latest
+npm i core-util-is
+```
+### Compiles and minifies for production
+```
+npm run build
+```
+`/dist` 以下に `*.html`, `*.js`, `*.css` ファイルが生成される
+
+### Run your serves
+```
+npm run serve
+```
+localhost を立ち上げる・
+
+### Lints and fixes files
+```
+npm run lint
+```
+コードの整形
+commit する前は必ず実行してほしい．
+
+### Customize configuration
+See [Configuration Reference](https://cli.vuejs.org/config/).
+
+ 
+ ## API
 
  最低限これだけあればよし
- #### PUT
+ ### PUT
  - `api/attend/<id>`
  json {
    "id": 3,
@@ -56,7 +89,7 @@ cargo run
    "state": 0,
  }
  
- #### GET
+ ### GET
  - `api/students/`
  json
  ```
@@ -86,7 +119,7 @@ cargo run
  }
  ```
 
-#### state対応表
+### state対応表
   
   0. Leave
   0. Attend
