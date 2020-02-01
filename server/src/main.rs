@@ -1,12 +1,20 @@
+#[macro_use]
+extern crate diesel;
+extern crate dotenv;
+
 use actix_web::web;
 use listenfd::ListenFd;
 
-mod api;
-mod person;
+pub mod api;
+pub mod person;
+pub mod schema;
+pub mod db;
+
 
 #[actix_rt::main]
 async fn main() -> std::io::Result<()> {
     use actix_web::{App, HttpServer};
+
 
     let mut listenfd = ListenFd::from_env();
     let mut server =  HttpServer::new(|| {
@@ -15,6 +23,7 @@ async fn main() -> std::io::Result<()> {
             .route("/api/leave/{id}", web::put().to(api::leave))
             .route("/api/students", web::get().to(api::get_all))
             .route("/api/student/{id}", web::get().to(api::get_student))
+            //.route("/api/signup/", web::post().to(api::signup))
     });
 
     server = if let Some(l) = listenfd.take_tcp_listener(0).unwrap() {
