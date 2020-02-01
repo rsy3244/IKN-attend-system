@@ -14,7 +14,7 @@
         v-model="role"
         :items="roleList"
         :error-messages="selectErrors"
-        label="Item"
+        label="Role"
         required
         @change="$v.select.$touch()"
         @blur="$v.select.$touch()"
