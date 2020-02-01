@@ -8,7 +8,6 @@
         :color="topColor"
         dark
       >
-        <v-app-bar-nav-icon></v-app-bar-nav-icon>
 
         <v-toolbar-title>
           {{ room }}部屋
@@ -16,13 +15,6 @@
 
         <v-spacer></v-spacer>
 
-        <v-btn icon>
-          <v-icon>mdi-magnify</v-icon>
-        </v-btn>
-
-        <v-btn icon>
-          <v-icon>mdi-dots-vertical</v-icon>
-        </v-btn>
       </v-toolbar>
       <v-list>
         <v-list-item

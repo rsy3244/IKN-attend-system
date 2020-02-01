@@ -18,6 +18,7 @@
           />
         </v-col>
       </v-row>
+      <ChatPanel />
     </center>
   </div>
 </template>
@@ -28,12 +29,14 @@ import { Vue, Component, Prop } from 'vue-property-decorator';
 
 import HelloWorld from '@/components/HelloWorld.vue';
 import AttendList from '@/components/AttendList.vue';
+import ChatPanel from '@/components/ChatPanel.vue';
 
 
 @Component({
   components: {
     HelloWorld,
     AttendList,
+    ChatPanel,
   },
 })
 export default class Home extends Vue {
