@@ -100,20 +100,36 @@ export default class AttendList extends Vue {
       }
       if (this.room === 'P') {
         return [
-          { id: 1, name: '有村博紀', role: '教授', state: 1},
-          { id: 2, name: '喜田拓也', role: '准教授', state: 1},
-          { id: 3, name: '眞鍋 由布', role: '秘書', state: 1},
+          { id: 1, username: '有村博紀', role: '教授', state: 1},
+          { id: 2, username: '喜田拓也', role: '准教授', state: 1},
+          { id: 3, username: '眞鍋 由布', role: '秘書', state: 1},
         ];
       }
-      return [ // 404 の時にこれを返す TODO 後で reutrn [] にする．
-        { id: 1, name: '古谷勇', role: 'D1', state: 1},
-        { id: 2, name: '加井丈志', role: 'M1', state: 1},
-        { id: 3, name: '大泉翼', role: 'B4', state: 1},
-        { id: 4, name: '光吉健汰', role: 'B4', state: 0},
-        { id: 5, name: '小畠教寛', role: 'B4', state: 1},
-        { id: 6, name: '又康太', role: 'B4', state: 1},
-        { id: 7, name: '奥地諒太', role: 'B4', state: 1},
-      ];
+      if (this.room === 'D') {
+        return [ // 404 の時にこれを返す TODO 後で reutrn [] にする．
+          { id: 1, username: '栗田和宏', role: 'D3', state: 1},
+          { id: 1, username: '金森 憲太朗', role: 'M2', state: 1},
+          { id: 1, username: '松田祐汰', role: 'M1', state: 1},
+          { id: 1, username: '瀧澤涼介', role: 'M1', state: 1},
+          { id: 3, username: '大泉翼', role: 'B4', state: 1},
+          { id: 5, username: '小畠教寛', role: 'B4', state: 1},
+          { id: 7, username: '奥地諒太', role: 'B4', state: 1},
+        ];
+      }
+      if (this.room === 'S') {
+        return [ // 404 の時にこれを返す TODO 後で reutrn [] にする．
+          { id: 1, username: '古谷勇', role: 'D1', state: 1},
+          { id: 2, username: '鳥谷部直弥', role: 'M2', state: 1},
+          { id: 3, username: '山岸大騎', role: 'M2', state: 1},
+          { id: 2, username: '加井　丈志', role: 'M1', state: 1},
+          { id: 2, username: '三上辰巳', role: 'M1', state: 1},
+          { id: 2, username: '王叶', role: 'M1', state: 1},
+          { id: 2, username: '三上辰巳', role: 'M1', state: 1},
+          { id: 4, username: '光吉健汰', role: 'B4', state: 0},
+          { id: 6, username: '又康太', role: 'B4', state: 1},
+        ];
+      }
+
     }).then((json) => {
       this.students = json;
     });
