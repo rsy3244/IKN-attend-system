@@ -1,17 +1,25 @@
 <template>
   <div class="home">
-    <v-row>
-      <v-col>
-        <AttendList 
-          room='D'
-        />
-      </v-col>
-      <v-col>
-        <AttendList
-          room='S'
-        />
-      </v-col>
-    </v-row>
+    <center>
+      <v-row>
+        <v-col>
+          <AttendList 
+            room='D'
+          />
+        </v-col>
+        <v-col>
+          <AttendList
+            room='S'
+          />
+        </v-col>
+        <v-col>
+          <AttendList
+            room='P'
+          />
+        </v-col>
+      </v-row>
+      <ChatPanel />
+    </center>
   </div>
 </template>
 
@@ -21,12 +29,14 @@ import { Vue, Component, Prop } from 'vue-property-decorator';
 
 import HelloWorld from '@/components/HelloWorld.vue';
 import AttendList from '@/components/AttendList.vue';
+import ChatPanel from '@/components/ChatPanel.vue';
 
 
 @Component({
   components: {
     HelloWorld,
     AttendList,
+    ChatPanel,
   },
 })
 export default class Home extends Vue {
@@ -35,6 +45,6 @@ export default class Home extends Vue {
 
 <style>
 .home {
-  margin-top: 5%;
+  margin: 5%;
 }
 </style>
