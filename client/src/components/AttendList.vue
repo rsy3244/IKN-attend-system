@@ -22,8 +22,9 @@
           v-for="(student, index) in students"
           :key="index"
           @click="switchAtendance(index)"
-          v-if="isSameRoom(student.id)"
+          v-if="isSameRoom(student.roomid)"
         >
+        {{ student }}
         <v-list-item-icon>
           <v-icon v-if="student.state === 1" color="pink">mdi-account-circle</v-icon>
         </v-list-item-icon>
@@ -62,8 +63,18 @@ export default class AttendList extends Vue {
   private students: any = [];
   @Prop()
   private room!: string;
-  private isSameRoom(id: number): boolean {
-    return true;
+  private isSameRoom(roomid: number): boolean {
+    let StudentRoom: string = '';
+    if (roomid === 706) {
+      StudentRoom = 'P';
+    } else if (roomid === 707) {
+      StudentRoom = 'S';
+    } else if (roomid === 722) {
+      StudentRoom = 'D';
+    } else {
+      StudentRoom = 'null';
+    }
+    return StudentRoom === this.room;
   }
   private switchAtendance(id: number): void {
     if (this.students[id].state === 1) {
