@@ -1,22 +1,30 @@
 use actix_web::{web, HttpResponse, Result};
 
 use super::person::*;
-use super::db::*;
 use super::diesel::prelude::*;
 
-
 pub async fn attend(info: web::Path<(i32,)>) -> Result<HttpResponse> {
-    Ok(HttpResponse::Ok().json(
-            Person::new(info.0, "サザエさん".to_string(), Role::B4, State::Leave)
-            .to_raw()
-    ))
+    use super::schema::people::dsl::*;
+    let connection = super::db::establish_connection();
+    let results = diesel::update(people)
+        .filter(id.eq(info.0))
+        .set(state.eq(1))
+        .execute(&connection)
+        .expect("Error loading people");
+
+    get_student(info).await
 }
 
 pub async fn leave(info: web::Path<(i32,)>) -> Result<HttpResponse> {
-    Ok(HttpResponse::Ok().json(
-            Person::new(info.0, "サザエさん".to_string(), Role::B4, State::Leave)
-            .to_raw()
-    ))
+    use super::schema::people::dsl::*;
+    let connection = super::db::establish_connection();
+    let results = diesel::update(people)
+        .filter(id.eq(info.0))
+        .set(state.eq(0))
+        .execute(&connection)
+        .expect("Error loading people");
+    
+    get_student(info).await
 }
 
 pub async fn get_all() -> Result<HttpResponse> {
@@ -44,7 +52,6 @@ pub async fn get_student(info: web::Path<(i32,)>) -> Result<HttpResponse> {
 
 //pub async fn signup<'a>(info: web::Json<NewPerson<'a>>) -> Result<HttpResponse> {
 //    use super::schema::people;
-//    use super::schema::people::dsl::*;
 //    let connection = super::db::establish_connection();
 //    diesel::insert_into(people::table)
 //        .values(&info)

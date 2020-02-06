@@ -41,14 +41,14 @@ cargo run
 
  最低限これだけあればよし
  #### PUT
- - `api/attend/<id>`
+ - [x]`api/attend/<id>`
  json {
    "id": 3,
    "username": "obata",
    "role": "B4",
    "state": 1,
  }
- - `api/leave/<id>`
+ - [x]`api/leave/<id>`
  json {
    "id": 4,
    "username": "mata",
@@ -57,7 +57,7 @@ cargo run
  }
  
  #### GET
- - `api/students/`
+ - [x]`api/students/`
  json
  ```
  [
@@ -75,7 +75,7 @@ cargo run
   },
  ]
  ```
- - `api/student/<id>`
+ - [x] `api/student/<id>`
  json
  ```
  {
@@ -85,6 +85,16 @@ cargo run
   "state": 1,
  }
  ```
+
+### POST
+- [ ] api/register/
+ To:
+ json
+
+ {
+  "username":
+  "role":
+ }
 
 #### state対応表
   
