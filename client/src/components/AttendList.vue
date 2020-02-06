@@ -17,10 +17,12 @@
 
       </v-toolbar>
       <v-list>
+        <!-- TODO roomid 実装されたら，ここを roomid する -->
         <v-list-item
           v-for="(student, index) in students"
           :key="index"
           @click="switchAtendance(index)"
+          v-if="isSameRoom(student.id)"
         >
         <v-list-item-icon>
           <v-icon v-if="student.state === 1" color="pink">mdi-account-circle</v-icon>
@@ -37,7 +39,6 @@
             <v-list-item v-if="student.state === 1">在室</v-list-item>
             <v-list-item v-if="student.state === 0">不在</v-list-item>
           </v-list-item-content>
-
         </v-list-item>
       </v-list>
     </v-card>
@@ -61,22 +62,23 @@ export default class AttendList extends Vue {
   private students: any = [];
   @Prop()
   private room!: string;
+  private isSameRoom(id: number): boolean {
+    return true;
+  }
   private switchAtendance(id: number): void {
     if (this.students[id].state === 1) {
-      this.leave(id);
+      this.leave(this.students[id].id);
     } else {
-      this.attend(id);
+      this.attend(this.students[id].id);
     }
   }
   private leave(id: number): void {
     const url = 'api/leave/' + `${id}`;
     fetch(url, {method: 'PUT'}).then((response) => {
       if (response.ok) {
-        // TODO ここは，getStudent を呼び直す仕様にする
-        this.students[id].state = 0;
+        this.getStudents();
       } else {
-        // alert('internal server error');
-        this.students[id].state = 0;
+        alert('internal server error');
       }
     });
   }
@@ -84,11 +86,9 @@ export default class AttendList extends Vue {
     const url = 'api/attend/' + `${id}`;
     fetch(url, {method: 'PUT'}).then((response) => {
       if (response.ok) {
-        // TODO ここは，getStudent を呼び直す仕様にする
-        this.students[id].state = 1;
+        this.getStudents();
       } else {
-        // alert('internal server error');
-        this.students[id].state = 1;
+        alert('internal server error');
       }
     });
   }
