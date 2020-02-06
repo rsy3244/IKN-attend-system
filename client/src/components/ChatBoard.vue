@@ -21,14 +21,8 @@
 
       <v-list three-line>
         <template v-for="(item, index) in items">
-          <v-subheader
-            v-if="item.header"
-            :key="item.header"
-            v-text="item.header"
-          ></v-subheader>
-
           <v-divider
-            v-else-if="item.divider"
+            v-if="item.divider"
             :key="index"
             :inset="item.inset"
           ></v-divider>
@@ -38,13 +32,11 @@
             :key="item.title"
             @click=""
           >
-            <v-list-item-avatar>
-              <v-img :src="item.avatar"></v-img>
-            </v-list-item-avatar>
-
             <v-list-item-content>
-              <v-list-item-title v-html="item.title"></v-list-item-title>
-              <v-list-item-subtitle v-html="item.subtitle"></v-list-item-subtitle>
+              <v-list-item-content>
+                {{item.name}}
+                {{item.text}}
+              </v-list-item-content>
             </v-list-item-content>
           </v-list-item>
         </template>
@@ -65,32 +57,11 @@ export default class ChatBoard extends Vue {
   private name: string = 'furuya';
 
   private items: any = [
-        { header: 'Today' },
-        {
-          avatar: 'https://cdn.vuetifyjs.com/images/lists/1.jpg',
-          title: 'Brunch this weekend?',
-        },
-        { divider: true, inset: true },
-        {
-          avatar: 'https://cdn.vuetifyjs.com/images/lists/2.jpg',
-          title: 'Summer BBQ <span class="grey--text text--lighten-1">4</span>',
-        },
-        { divider: true, inset: true },
-        {
-          avatar: 'https://cdn.vuetifyjs.com/images/lists/3.jpg',
-          title: 'Oui oui',
-        },
-        { divider: true, inset: true },
-        {
-          avatar: 'https://cdn.vuetifyjs.com/images/lists/4.jpg',
-          title: 'Birthday gift',
-        },
-        { divider: true, inset: true },
-        {
-          avatar: 'https://cdn.vuetifyjs.com/images/lists/5.jpg',
-          title: 'Recipe to try',
-        },
-      ];
+    {
+      name: 'oizumi',
+      text: '食堂行こう',
+    },
+  ];
 }
 </script>
 
