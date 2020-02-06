@@ -4,5 +4,6 @@ table! {
         username -> Varchar,
         role -> Varchar,
         state -> Integer,
+        roomid -> Nullable<Integer>,
     }
 }
