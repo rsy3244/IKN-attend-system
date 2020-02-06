@@ -7,6 +7,7 @@ pub struct PersonRaw {
     pub username: String,
     pub role: String,
     pub state: i32,
+    pub roomid: Option<i32>,
 }
 
 impl PersonRaw {
@@ -35,6 +36,7 @@ impl PersonRaw {
                 1 => State::Attend,
                 _ => panic!("not implemented!"),
             },
+            roomid: self.roomid,
         }
     }
 }
@@ -44,6 +46,7 @@ impl PersonRaw {
 pub struct NewPerson<'a> {
     pub username: &'a str,
     pub role: &'a str,
+    pub roomid: Option<i32>,
 }
 
 pub struct Person {
@@ -51,11 +54,12 @@ pub struct Person {
     username: String,
     role: Role,
     state: State,
+    roomid: Option<i32>,
 }
 
 impl Person {
-    pub fn new(id: i32, username: String, role: Role, state: State) -> Person {
-        Person { id, username, role, state }
+    pub fn new(id: i32, username: String, role: Role, state: State, roomid: Option<i32>) -> Person {
+        Person { id, username, role, state, roomid}
     }
 
     pub fn to_raw(&self) -> PersonRaw {
@@ -64,6 +68,7 @@ impl Person {
             username: self.username.clone(),
             role: self.role.to_string(),
             state: self.state.to_i32(),
+            roomid: self.roomid,
         }
     }
 }

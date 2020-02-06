@@ -1,8 +1,9 @@
 table! {
     people (id) {
         id -> Integer,
-        username -> Varchar,
-        role -> Varchar,
+        username -> Text,
+        role -> Text,
         state -> Integer,
+        roomid -> Nullable<Integer>,
     }
 }

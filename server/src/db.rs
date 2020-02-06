@@ -12,12 +12,13 @@ pub fn establish_connection() -> SqliteConnection {
         .unwrap_or_else(|_| panic!("Error connection to {}", database_url))
 }
 
-pub fn create_post<'a>(conn: &SqliteConnection, username: &'a str, role: &'a str) -> usize {
+pub fn create_post<'a>(conn: &SqliteConnection, username: &'a str, role: &'a str, roomid: Option<i32>) -> usize {
     use super::schema::people;
 
     let new_person = NewPerson {
         username,
         role,
+        roomid
     };
 
     diesel::insert_into(people::table)
