@@ -24,21 +24,21 @@
           @click="switchAtendance(index)"
           v-if="isSameRoom(student.id)"
         >
-          <v-list-item-icon>
-            <v-icon v-if="student.state === 1" color="pink">mdi-account-circle</v-icon>
-          </v-list-item-icon>
-            <v-list-item-content>
-              <v-list-item v-text="student.role"></v-list-item>
-            </v-list-item-content>
+        <v-list-item-icon>
+          <v-icon v-if="student.state === 1" color="pink">mdi-account-circle</v-icon>
+        </v-list-item-icon>
+          <v-list-item-content>
+            <v-list-item v-text="student.role"></v-list-item>
+          </v-list-item-content>
 
-            <v-list-item-content>
-              <v-list-item-title v-text="student.username"></v-list-item-title>
-            </v-list-item-content>
+          <v-list-item-content>
+            <v-list-item-title v-text="student.username"></v-list-item-title>
+          </v-list-item-content>
 
-            <v-list-item-content>
-              <v-list-item v-if="student.state === 1">在室</v-list-item>
-              <v-list-item v-if="student.state === 0">不在</v-list-item>
-            </v-list-item-content>
+          <v-list-item-content>
+            <v-list-item v-if="student.state === 1">在室</v-list-item>
+            <v-list-item v-if="student.state === 0">不在</v-list-item>
+          </v-list-item-content>
         </v-list-item>
       </v-list>
     </v-card>
