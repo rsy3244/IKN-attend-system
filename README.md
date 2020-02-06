@@ -26,6 +26,11 @@ cargo install systemfd cargo-watch
 
 ### 動作確認
 
+- DBを初期状態にする
+```bash
+cp people.db.base people.db
+```
+
 - ビルドして実行（serverディレクトリで行う）
 
 ```bash
