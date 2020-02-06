@@ -34,12 +34,12 @@ impl PersonRaw {
                 0 => State::Leave,
                 1 => State::Attend,
                 _ => panic!("not implemented!"),
-            }
+            },
         }
     }
 }
 
-#[derive(Insertable)]
+#[derive(Insertable, Deserialize)]
 #[table_name="people"]
 pub struct NewPerson<'a> {
     pub username: &'a str,

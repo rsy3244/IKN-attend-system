@@ -74,14 +74,14 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 
  最低限これだけあればよし
  ### PUT
- - `api/attend/<id>`
+ - [x]`api/attend/<id>`
  json {
    "id": 3,
    "username": "obata",
    "role": "B4",
    "state": 1,
  }
- - `api/leave/<id>`
+ - [x]`api/leave/<id>`
  json {
    "id": 4,
    "username": "mata",
@@ -90,7 +90,7 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
  }
  
  ### GET
- - `api/students/`
+ - [x]`api/students/`
  json
  ```
  [
@@ -108,7 +108,7 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
   },
  ]
  ```
- - `api/student/<id>`
+ - [x] `api/student/<id>`
  json
  ```
  {
@@ -118,6 +118,16 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
   "state": 1,
  }
  ```
+
+### POST
+- [ ] api/register/
+ To:
+ json
+
+ {
+  "username":
+  "role":
+ }
 
 ### state対応表
   

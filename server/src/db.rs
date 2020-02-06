@@ -23,7 +23,7 @@ pub fn create_post<'a>(conn: &SqliteConnection, username: &'a str, role: &'a str
     diesel::insert_into(people::table)
         .values(&new_person)
         .execute(conn)
-        .expect("Error registering")
+        .expect("Error")
 }
         
 
