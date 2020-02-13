@@ -4,21 +4,30 @@ extern crate dotenv;
 
 use actix_web::web;
 use listenfd::ListenFd;
+use diesel::prelude::*;
+use diesel::r2d2::{self, ConnectionManager};
 
 pub mod api;
 pub mod person;
 pub mod schema;
 pub mod db;
 
-
 #[actix_rt::main]
 async fn main() -> std::io::Result<()> {
     use actix_web::{App, HttpServer};
+    dotenv::dotenv().ok();
+
+    let connspec = std::env::var("DATABASE_URL").expect("DATABASE_URL must be set");
+    let manager = ConnectionManager::<SqliteConnection>::new(connspec);
+    let pool = r2d2::Pool::builder()
+        .build(manager)
+        .expect("Failed to create pool.");
 
 
     let mut listenfd = ListenFd::from_env();
-    let mut server =  HttpServer::new(|| {
+    let mut server =  HttpServer::new(move || {
         App::new()
+            .data(pool.clone())
             .route("/api/attend/{id}", web::put().to(api::attend))
             .route("/api/leave/{id}", web::put().to(api::leave))
             .route("/api/students", web::get().to(api::get_all))
