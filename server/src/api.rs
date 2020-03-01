@@ -1,53 +1,84 @@
 use actix_web::{web, HttpResponse, Result};
 
 use super::person::*;
-use super::diesel::prelude::*;
 
-pub async fn attend(info: web::Path<(i32,)>) -> Result<HttpResponse> {
-    use super::schema::people::dsl::*;
-    let connection = super::db::establish_connection();
-    let results = diesel::update(people)
-        .filter(id.eq(info.0))
-        .set(state.eq(1))
-        .execute(&connection)
-        .expect("Error loading people");
+use super::db::DbPool;
 
-    get_student(info).await
+pub async fn attend(
+    pool: web::Data<DbPool>,
+    info: web::Path<(i32,)>
+) -> Result<HttpResponse> {
+    let connection = pool.get().expect("couldn't get db connection from pool");
+    let input: i32 = info.0;
+    let result = web::block(move || super::db::update_user_status(input, State::Leave, &connection))
+        .await
+        .map_err(|e| {
+            eprintln!("{}", e);
+            HttpResponse::InternalServerError().finish()
+        })?;
+    if let Some(result) = result {
+        Ok(HttpResponse::Ok().json(result))
+    } else {
+        let res = HttpResponse::NotFound()
+            .body(format!("No user found with id: {}", input));
+        Ok(res)
+    }
 }
 
-pub async fn leave(info: web::Path<(i32,)>) -> Result<HttpResponse> {
-    use super::schema::people::dsl::*;
-    let connection = super::db::establish_connection();
-    let results = diesel::update(people)
-        .filter(id.eq(info.0))
-        .set(state.eq(0))
-        .execute(&connection)
-        .expect("Error loading people");
-    
-    get_student(info).await
+pub async fn leave(
+    pool: web::Data<DbPool>,
+    info: web::Path<(i32,)>
+) -> Result<HttpResponse> {
+    let connection = pool.get().expect("couldn't get db connection from pool");
+    let input: i32 = info.0;
+    let result = web::block(move || super::db::update_user_status(input, State::Leave, &connection))
+        .await
+        .map_err(|e| {
+            eprintln!("{}", e);
+            HttpResponse::InternalServerError().finish()
+        })?;
+    if let Some(result) = result {
+        Ok(HttpResponse::Ok().json(result))
+    } else {
+        let res = HttpResponse::NotFound()
+            .body(format!("No user found with id: {}", input));
+        Ok(res)
+    }
 }
 
-pub async fn get_all() -> Result<HttpResponse> {
-    use super::schema::people::dsl::*;
-    let connection = super::db::establish_connection();
-    let results = people
-        .load::<PersonRaw>(&connection)
-        .expect("Error loading people");
-    Ok(HttpResponse::Ok().json(
-            results
-    ))
+pub async fn get_all(
+    pool: web::Data<DbPool>,
+) -> Result<HttpResponse> {
+    let connection = pool.get().expect("couldn't get db connection from pool");
+    let ret = web::block(move || super::db::list_users(&connection))
+        .await
+        .map_err(|e| {
+            eprintln!("{}", e);
+            HttpResponse::InternalServerError().finish()
+        })?;
+    Ok(HttpResponse::Ok().json(ret))
 }
 
-pub async fn get_student(info: web::Path<(i32,)>) -> Result<HttpResponse> {
-    use super::schema::people::dsl::*;
-    let connection = super::db::establish_connection();
-    let results = people
-        .filter(id.eq(info.0))
-        .load::<PersonRaw>(&connection)
-        .expect("Error loading people");
-    Ok(HttpResponse::Ok().json(
-        results.iter().next()
-    ))
+pub async fn get_student(
+    pool: web::Data<DbPool>,
+    info: web::Path<(i32,)>
+) -> Result<HttpResponse> {
+    let connection = pool.get().expect("couldn't get db connection from pool");
+    let input: i32 = info.0;
+    let person = web::block(move || super::db::find_user_by_id(input, &connection))
+        .await
+        .map_err(|e| {
+            eprintln!("{}", e);
+            HttpResponse::InternalServerError().finish()
+        })?;
+
+    if let Some(person) = person {
+        Ok(HttpResponse::Ok().json(person))
+    } else {
+        let res = HttpResponse::NotFound()
+            .body(format!("No user found with id: {}", input));
+        Ok(res)
+    }
 }
 
 //pub async fn signup<'a>(info: web::Json<NewPerson<'a>>) -> Result<HttpResponse> {
@@ -59,5 +90,3 @@ pub async fn get_student(info: web::Path<(i32,)>) -> Result<HttpResponse> {
 //        .expect("Error signup");
 //    Ok(HttpResponse::Ok())
 //}
-
-

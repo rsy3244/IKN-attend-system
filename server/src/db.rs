@@ -2,7 +2,10 @@ use diesel::prelude::*;
 use dotenv::dotenv;
 use std::env;
 
-use super::person::{NewPerson};
+use super::person::*;
+
+pub type DbPool = diesel::r2d2::Pool<diesel::r2d2::ConnectionManager<SqliteConnection>>;
+
 
 pub fn establish_connection() -> SqliteConnection {
     dotenv().ok();
@@ -10,6 +13,48 @@ pub fn establish_connection() -> SqliteConnection {
     let database_url = env::var("DATABASE_URL").expect("DATABASE_URL must be set");
     SqliteConnection::establish(&database_url)
         .unwrap_or_else(|_| panic!("Error connection to {}", database_url))
+}
+
+pub fn update_user_status(
+    userid: i32,
+    stat: State,
+    conn: &SqliteConnection
+) -> Result<Option<PersonRaw>, diesel::result::Error> {
+    use crate::schema::people::dsl::*;
+    let stat = match stat {
+        State::Leave => 0,
+        State::Attend => 1,
+        _ => panic!("invalid state"),
+    };
+
+    let result = diesel::update(people)
+        .filter(id.eq(userid))
+        .set(state.eq(stat))
+        .execute(conn)
+        .expect("Error loading people");
+
+    find_user_by_id(userid, conn)
+}
+
+pub fn list_users(
+    conn: &SqliteConnection
+) -> Result<Vec<PersonRaw>, diesel::result::Error> {
+    use crate::schema::people::dsl::*;
+    people.load::<PersonRaw>(conn)
+}
+
+
+pub fn find_user_by_id(
+    userid: i32,
+    conn: &SqliteConnection,
+) -> Result<Option<PersonRaw>, diesel::result::Error> {
+    use crate::schema::people::dsl::*;
+    let ret = people
+        .filter(id.eq(userid))
+        .first::<PersonRaw>(conn)
+        .optional()?;
+
+    Ok(ret)
 }
 
 pub fn create_post<'a>(conn: &SqliteConnection, username: &'a str, role: &'a str, roomid: Option<i32>) -> usize {
