@@ -24,7 +24,6 @@
           @click="switchAtendance(index)"
           v-if="isSameRoom(student.roomid)"
         >
-        {{ student }}
         <v-list-item-icon>
           <v-icon v-if="student.state === 1" color="pink">mdi-account-circle</v-icon>
         </v-list-item-icon>
