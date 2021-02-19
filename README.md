@@ -1,8 +1,16 @@
 # IKN-attend-system
 在席確認システム
 
+**現在、Dockerでの運用に移行中**
+
+進捗状況
+
+- [x] server
+- [ ] client
+
 # 環境構築
 ## server
+
 ### rustの導入
 
 - これをターミナルに入力
