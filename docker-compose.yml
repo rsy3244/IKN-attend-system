@@ -1,11 +1,16 @@
 version: '3.7'
 services:
+    client:
+        build: ./client
+        ports:
+            - 8080:8080
+        command: yarn serve
     backend:
         build:
             context: ./server
             target: 'develop-stage'
         ports:
-            - "8080:8080"
+            - 8081:8080
         volumes:
             - ./server:/server
         command: /bin/sh -c "cargo watch -x run"
