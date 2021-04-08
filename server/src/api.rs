@@ -73,7 +73,7 @@ pub async fn get_student(pool: web::Data<DbPool>, info: web::Path<(i32,)>) -> Re
 //    use super::schema::people;
 //    let connection = super::db::establish_connection();
 //    diesel::insert_into(people::table)
-//        .values(&info)
+//        .values(&*info)
 //        .execute(connection)
 //        .expect("Error signup");
 //    Ok(HttpResponse::Ok())
