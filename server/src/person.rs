@@ -6,9 +6,9 @@ use serde_repr::{Deserialize_repr, Serialize_repr};
 
 #[derive(Insertable, Deserialize)]
 #[table_name = "people"]
-pub struct NewPerson<'a> {
-    pub username: &'a str,
-    pub role: &'a str,
+pub struct NewPerson {
+    pub username: String,
+    pub role: String,
     pub roomid: Option<i32>,
 }
 
