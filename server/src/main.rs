@@ -5,6 +5,7 @@ extern crate dotenv;
 use actix_web::web;
 use diesel::prelude::*;
 use diesel::r2d2::{self, ConnectionManager};
+use env_logger;
 use listenfd::ListenFd;
 
 pub mod api;
@@ -16,6 +17,7 @@ pub mod schema;
 async fn main() -> std::io::Result<()> {
     use actix_web::{App, HttpServer};
     dotenv::dotenv().ok();
+    env_logger::init();
 
     let connspec = std::env::var("DATABASE_URL").expect("DATABASE_URL must be set");
     let manager = ConnectionManager::<SqliteConnection>::new(connspec);
