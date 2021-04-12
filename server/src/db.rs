@@ -6,7 +6,6 @@ use super::person::*;
 
 pub type DbPool = diesel::r2d2::Pool<diesel::r2d2::ConnectionManager<SqliteConnection>>;
 
-
 pub fn establish_connection() -> SqliteConnection {
     dotenv().ok();
 
@@ -18,52 +17,54 @@ pub fn establish_connection() -> SqliteConnection {
 pub fn update_user_status(
     userid: i32,
     stat: State,
-    conn: &SqliteConnection
-) -> Result<Option<PersonRaw>, diesel::result::Error> {
+    conn: &SqliteConnection,
+) -> Result<Option<Person>, diesel::result::Error> {
     use crate::schema::people::dsl::*;
     let stat = match stat {
         State::Leave => 0,
         State::Attend => 1,
-        _ => panic!("invalid state"),
+        //_ => panic!("invalid state"),
     };
 
-    let result = diesel::update(people)
+    let _result = diesel::update(people)
         .filter(id.eq(userid))
         .set(state.eq(stat))
-        .execute(conn)
-        .expect("Error loading people");
+        .execute(conn)?;
+    //.expect("Error loading people");
 
     find_user_by_id(userid, conn)
 }
 
-pub fn list_users(
-    conn: &SqliteConnection
-) -> Result<Vec<PersonRaw>, diesel::result::Error> {
+pub fn list_users(conn: &SqliteConnection) -> Result<Vec<Person>, diesel::result::Error> {
     use crate::schema::people::dsl::*;
-    people.load::<PersonRaw>(conn)
+    people.load::<Person>(conn)
 }
-
 
 pub fn find_user_by_id(
     userid: i32,
     conn: &SqliteConnection,
-) -> Result<Option<PersonRaw>, diesel::result::Error> {
+) -> Result<Option<Person>, diesel::result::Error> {
     use crate::schema::people::dsl::*;
     let ret = people
         .filter(id.eq(userid))
-        .first::<PersonRaw>(conn)
+        .first::<Person>(conn)
         .optional()?;
 
     Ok(ret)
 }
 
-pub fn create_post<'a>(conn: &SqliteConnection, username: &'a str, role: &'a str, roomid: Option<i32>) -> usize {
+pub fn create_post<'a>(
+    conn: &SqliteConnection,
+    username: &'a str,
+    role: &'a str,
+    roomid: Option<i32>,
+) -> usize {
     use super::schema::people;
 
     let new_person = NewPerson {
         username,
         role,
-        roomid
+        roomid,
     };
 
     diesel::insert_into(people::table)
@@ -71,6 +72,3 @@ pub fn create_post<'a>(conn: &SqliteConnection, username: &'a str, role: &'a str
         .execute(conn)
         .expect("Error")
 }
-        
-
-
