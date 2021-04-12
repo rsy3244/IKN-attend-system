@@ -2,6 +2,7 @@
 extern crate diesel;
 extern crate dotenv;
 
+use actix_web::middleware::Logger;
 use actix_web::web;
 use diesel::prelude::*;
 use diesel::r2d2::{self, ConnectionManager};
@@ -28,12 +29,13 @@ async fn main() -> std::io::Result<()> {
     let mut listenfd = ListenFd::from_env();
     let mut server = HttpServer::new(move || {
         App::new()
+            .wrap(Logger::default())
             .data(pool.clone())
             .route("/api/attend/{id}", web::put().to(api::attend))
             .route("/api/leave/{id}", web::put().to(api::leave))
             .route("/api/students", web::get().to(api::get_all))
             .route("/api/student/{id}", web::get().to(api::get_student))
-            .route("/api/signup/", web::post().to(api::register))
+            .route("/api/register", web::post().to(api::register))
     });
 
     server = if let Some(l) = listenfd.take_tcp_listener(0).unwrap() {
