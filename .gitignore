@@ -1,2 +1,2 @@
-server/target/
-server/Cargo.lock
+server_rust/target/
+server_rust/Cargo.lock
