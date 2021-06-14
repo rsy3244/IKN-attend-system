@@ -55,11 +55,15 @@ export default class SignUp extends Vue {
   private signup(): void {
     const url = 'api/signup';
     const method = 'POST';
+    const headers = {
+      'Content-Type': 'application/json; charset=UTF-8',
+    };
     const body = JSON.stringify({
-      name: this.name,
+      username: this.name,
       role: this.role,
+      roomid: 707,
     });
-    fetch(url, {method, body}).then((response) => {
+    fetch(url, {method, headers, body}).then((response) => {
       if (response.ok) {
         return response.json();
       }
