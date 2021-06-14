@@ -2,20 +2,23 @@
 extern crate diesel;
 extern crate dotenv;
 
+use actix_web::middleware::Logger;
 use actix_web::web;
-use listenfd::ListenFd;
 use diesel::prelude::*;
 use diesel::r2d2::{self, ConnectionManager};
+use env_logger;
+use listenfd::ListenFd;
 
 pub mod api;
+pub mod db;
 pub mod person;
 pub mod schema;
-pub mod db;
 
 #[actix_rt::main]
 async fn main() -> std::io::Result<()> {
     use actix_web::{App, HttpServer};
     dotenv::dotenv().ok();
+    env_logger::init();
 
     let connspec = std::env::var("DATABASE_URL").expect("DATABASE_URL must be set");
     let manager = ConnectionManager::<SqliteConnection>::new(connspec);
@@ -23,16 +26,16 @@ async fn main() -> std::io::Result<()> {
         .build(manager)
         .expect("Failed to create pool.");
 
-
     let mut listenfd = ListenFd::from_env();
-    let mut server =  HttpServer::new(move || {
+    let mut server = HttpServer::new(move || {
         App::new()
+            .wrap(Logger::default())
             .data(pool.clone())
             .route("/api/attend/{id}", web::put().to(api::attend))
             .route("/api/leave/{id}", web::put().to(api::leave))
             .route("/api/students", web::get().to(api::get_all))
             .route("/api/student/{id}", web::get().to(api::get_student))
-            //.route("/api/signup/", web::post().to(api::signup))
+            .route("/api/register", web::post().to(api::register))
     });
 
     server = if let Some(l) = listenfd.take_tcp_listener(0).unwrap() {

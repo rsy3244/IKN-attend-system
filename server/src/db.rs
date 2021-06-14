@@ -53,22 +53,13 @@ pub fn find_user_by_id(
     Ok(ret)
 }
 
-pub fn create_post<'a>(
+pub fn register_user(
     conn: &SqliteConnection,
-    username: &'a str,
-    role: &'a str,
-    roomid: Option<i32>,
-) -> usize {
+    new_person: &NewPerson,
+) -> Result<usize, diesel::result::Error> {
     use super::schema::people;
 
-    let new_person = NewPerson {
-        username,
-        role,
-        roomid,
-    };
-
     diesel::insert_into(people::table)
-        .values(&new_person)
+        .values(new_person)
         .execute(conn)
-        .expect("Error")
 }
